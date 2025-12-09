@@ -1,24 +1,26 @@
-name: My Composite Action
+name: Lint GitHub Actions Workflow Configuration
 
-description: A composite action that ...
+description: A composite action for linting GitHub Actions workflow configuration.
 
 inputs:
-  my-input:
-    description: This is my input, there is no other input like it.
+  go-version:
+    description: The version of Go to use when running `actionslint`.
+    default: 1.25.5
     required: false
-    default: The default description.
-
-outputs:
-  my-output:
-    description: The output this composite action produces.
-    value: steps.workflow-step.outputs.my-output
+    type: string
 
 runs:
   using: composite
   steps:
-    - name: Workflow Step
-      id: workflow-step
+    - name: Setup Go
+      uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+      with:
+        go-version: ${{ inputs.go-version }}
+
+    - name: Install actionlint
+      run: |
+        go install github.com/rhysd/actionlint/cmd/actionlint@a443f344ff32813837fa49f7aa6cbc478d770e62 # v1.7.9
+
+    - name: Lint Workflow Files
       run: |-
-        printf 'my-output=%s\n' "${MY_INPUT}" >> "${GITHUB_OUTPUT}"
-      env:
-        MY_INPUT: inputs.my-input
+        actionlint -color
