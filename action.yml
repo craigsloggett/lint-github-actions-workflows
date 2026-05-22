@@ -7,7 +7,6 @@ inputs:
     description: The version of Go to use when running `actionslint`.
     default: 1.26.3
     required: false
-    type: string
 
 runs:
   using: composite
