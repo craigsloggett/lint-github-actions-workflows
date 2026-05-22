@@ -5,7 +5,7 @@ description: A composite action for linting GitHub Actions workflow configuratio
 inputs:
   go-version:
     description: The version of Go to use when running `actionslint`.
-    default: 1.25.5
+    default: 1.26.3
     required: false
     type: string
 
@@ -20,7 +20,7 @@ runs:
 
     - name: Install actionlint
       run: |
-        go install github.com/rhysd/actionlint/cmd/actionlint@a443f344ff32813837fa49f7aa6cbc478d770e62 # v1.7.9
+        go install github.com/rhysd/actionlint/cmd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca # v1.7.12
       shell: sh
 
     - name: Lint Workflow Files
